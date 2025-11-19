@@ -14,8 +14,16 @@ while ($true) {
     if ($status) {
         Write-Host "Changes detected at $(Get-Date). Committing..."
         
-        # Get list of changed files for the commit message
-        $changedFiles = $status | ForEach-Object { $_.Substring(3) }
+        # Get list of changed files with status symbols
+        $changedFiles = $status | ForEach-Object {
+            $code = $_.Substring(0, 2)
+            $file = $_.Substring(3)
+            
+            if ($code -match "^\?\?" -or $code -match "A") { "+ $file" }
+            elseif ($code -match "D") { "- $file" }
+            elseif ($code -match "M") { "~ $file" }
+            else { "$code $file" }
+        }
         $changedFilesStr = $changedFiles -join ", "
         
         # Add all changes
