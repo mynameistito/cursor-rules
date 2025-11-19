@@ -89,6 +89,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── plan.mdc
 │   │   ├── prd-file-structure-and-taskmanagement.mdc
 │   │   ├── react-nextjs.mdc
+│   │   ├── rule-architect copy.mdc
 │   │   └── rule-architect.mdc
 │   └── worktrees.json
 ├── scripts/
