@@ -18,8 +18,8 @@ jobs:
       fail-fast: false
       matrix:
         repo: 
-          - 'mynameistito/private-backend'
-          - 'mynameistito/another-project'
+          - 'mynameistito/cursor-rules-test-1'
+          - 'mynameistito/cursor-rules-test-2'
 
     steps:
       - name: 📥 Checkout Source
