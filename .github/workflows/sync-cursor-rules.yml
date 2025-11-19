@@ -1,11 +1,15 @@
-name: "Sync Cursor Rules (Test Mode: Always Ping)"
+name: Sync Cursor Rules (Production)
 
 on:
   push:
     branches:
       - main
-    # paths:
-    #   - '.cursor/rules/**'
+    # Uncomment these lines to only run when rules actually change
+    paths:
+      - '.cursor/rules/**'
+      - '.cursor/commands/**'
+      - '.cursor/worktrees.json'
+      - '.github/workflows/sync.yml'
   workflow_dispatch:
 
 jobs:
@@ -87,6 +91,7 @@ jobs:
             echo "✨ NO CHANGES"
           fi
 
+      # 📝 Report Failure
       - name: Report Failure
         if: failure()
         run: |
@@ -102,7 +107,7 @@ jobs:
           retention-days: 1
 
   # ------------------------------------------------------------------
-  # JOB 2: THE REPORTER (Always Runs + Always Pings)
+  # JOB 2: THE REPORTER (Failures Only)
   # ------------------------------------------------------------------
   notify-discord:
     needs: sync-configuration
@@ -122,44 +127,34 @@ jobs:
         run: |
           LOG_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
           
-          # CHECK IF FAILURES EXIST
-          if [ -d "failures" ] && [ "$(ls -A failures)" ]; then
-            # --- FAILURE MODE (Red) ---
-            echo "❌ Failures detected."
-            
-            LIST_STRING=""
-            for f in failures/*.txt; do
-              REPO_NAME=$(cat "$f")
-              LIST_STRING="$LIST_STRING\\n- \`$REPO_NAME\`"
-            done
-
-            # ⚠️ CHANGE USER ID HERE IF NEEDED
-            MESSAGE_CONTENT="⚠️ <@611746802122620937> **Sync Failed!** Issues detected."
-            EMBED_DESC="$LIST_STRING"
-            COLOR=15548997 # Red
-          
-          else
-            # --- SUCCESS MODE (Green) ---
-            echo "✅ Success. Sending test ping."
-            
-            MESSAGE_CONTENT="✅ <@611746802122620937> **Test Notification:** Sync Complete!"
-            EMBED_DESC="All repositories were checked and are 100% in sync."
-            COLOR=5763719 # Green
+          # 1. Check if failures exist. If EMPTY, exit silently.
+          if [ ! -d "failures" ] || [ -z "$(ls -A failures)" ]; then
+            echo "✅ No failures found. Silent success."
+            exit 0
           fi
 
-          # SEND PAYLOAD
+          # 2. If we are here, something failed.
+          echo "❌ Failures detected. Sending Alert..."
+          
+          LIST_STRING=""
+          for f in failures/*.txt; do
+            REPO_NAME=$(cat "$f")
+            LIST_STRING="$LIST_STRING\\n- \`$REPO_NAME\`"
+          done
+
+          # 3. Send Ping to Discord (User ID: 611746802122620937)
           cat <<EOF > discord_payload.json
           {
             "username": "Cursor Sync Bot",
-            "content": "$MESSAGE_CONTENT",
+            "content": "⚠️ <@611746802122620937> **Sync Failed!** Issues detected:",
             "embeds": [
               {
-                "description": "$EMBED_DESC",
-                "color": $COLOR,
+                "description": "$LIST_STRING",
+                "color": 15548997,
                 "fields": [
                   {
-                    "name": "View Logs",
-                    "value": "[👉 Click here]($LOG_URL)"
+                    "name": "Troubleshooting",
+                    "value": "[👉 Click here to view Logs]($LOG_URL)"
                   }
                 ]
               }
