@@ -10,6 +10,15 @@ Write-Host "Pushing to $Remote/$Branch"
 Write-Host "Press Ctrl+C to stop."
 
 while ($true) {
+    # Check for remote changes
+    git fetch $Remote
+    $behindCount = git rev-list HEAD..$Remote/$Branch --count
+    
+    if ([int]$behindCount -gt 0) {
+        Write-Host "Behind remote by $behindCount commits. Pulling..."
+        git pull $Remote $Branch
+    }
+
     $status = git status --porcelain
     if ($status) {
         Write-Host "Changes detected at $(Get-Date). Committing..."
