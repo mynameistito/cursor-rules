@@ -1,0 +1,73 @@
+---
+description: Detects repetitive patterns and suggests creating new project-specific rules.
+globs: .cursor/rules/*.mdc, **/*
+alwaysApply: true
+---
+# Rule Architect & Governor
+
+**Trigger:** Always active in background. Explicitly triggers when the user says "Create a rule for this" or "Standardize this".
+
+## 1. Detection Heuristics
+You are responsible for maintaining the "Law" of the codebase. Suggest creating a new Sub-Rule if:
+1.  **Repetition:** You notice the user explaining the same convention (e.g., "Auth tokens must be passed like X") more than twice.
+2.  **Directory Specifics:** A specific folder (e.g., `src/modules/payment/`) has strict logic that differs from the global `master-coding.mdc`.
+3.  **Legacy Locks:** A legacy folder requires older syntax (e.g., "No Arrow Functions") conflicting with the Master Rule.
+
+## 2. Protocol: "Prompt First"
+**NEVER** create a rule file silently. You must follow this flow:
+
+1.  **Identify:** "I notice we are consistently applying [Specific Pattern] in [Scope]."
+2.  **Propose:** "Should I create a new rule file `[name].mdc` to enforce this automatically?"
+3.  **Draft (Mental):** Prepare the content based on the template below.
+4.  **Action:** Wait for user confirmation ("Yes").
+
+## 3. Rule Creation Standard
+When creating a new sub-rule, adhere to this strict template:
+
+*   **Filename:** Kebab-case, descriptive (e.g., `payment-logic.mdc`, `legacy-api-standards.mdc`).
+*   **Location:** `.cursor/rules/`
+*   **Frontmatter:**
+    *   `description`: Precise summary.
+    *   `globs`: **VERY SPECIFIC** (e.g., `src/payment/**/*.ts`). Avoid `*` wildcards.
+    *   `alwaysApply`: `false` (Sub-rules should be contextual).
+
+### Template
+```markdown
+---
+description: [Specific Context] standards.
+globs: [Specific Directory]
+alwaysApply: false
+---
+# [Name] Standards
+
+**Inheritance:** This rule extends `master-coding.mdc`.
+
+## 1. Context
+[Why this rule exists]
+
+## 2. Specific Conventions
+*   [Rule 1]
+*   [Rule 2]
+```
+
+## 4. Conflict Resolution
+If a proposed Sub-Rule conflicts with the Global Master Rule (e.g., allowing `any` in legacy code):
+1.  **Flag it:** Warning the user "This conflicts with Master Rule Section X."
+2.  **Override:** If confirmed, explicitly state in the new rule: "**Override:** This rule supersedes `master-coding.mdc` for these specific files."
+```
+
+### How to use this workflow effectively
+
+1.  **The Scenario:** You are working on a complex `Stripe` integration in `src/lib/stripe`. You tell the AI: *"Hey, whenever we call Stripe, we need to wrap it in this specific `try/catch` block and log to Datadog."*
+2.  **The Architect Triggers:** The AI (reading `rule-architect.mdc`) should reply:
+    > "I see a strict pattern here for Stripe. Should I create `stripe-integration.mdc` so I remember this `try/catch` requirement for all future Stripe files?"
+3.  **You say:** "Yes."
+4.  **The Result:** It creates `.cursor/rules/stripe-integration.mdc` with `globs: src/lib/stripe/*.ts`.
+
+### Important Note on Git
+Since we previously setup your Global Bootstrap to **ignore** `.cursor/rules` (because it pulls from your Global GitHub), these new "Project Specific" rules might get ignored by Git.
+
+If you create a sub-rule that is **unique to this project** (not global), you should tell the AI:
+*"Create this rule, and please force add it to git so the team sees it."*
+
+Command: `git add -f .cursor/rules/stripe-integration.mdc`
