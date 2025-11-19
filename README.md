@@ -83,7 +83,6 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── commit.mdc
 │   │   ├── issues.md
 │   │   ├── issues.mdc
-│   │   ├── planning-agent copy.md
 │   │   └── planning-agent.md
 │   ├── rules/
 │   │   ├── bun.mdc
