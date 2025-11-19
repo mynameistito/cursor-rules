@@ -18,8 +18,12 @@ jobs:
       fail-fast: false
       matrix:
         repo: 
+          # Personal
           - 'mynameistito/cursor-rules-test-1'
           - 'mynameistito/cursor-rules-test-2'
+          
+          #KillzoneGaming
+          - 'KillzoneGaming/kzg-servers-connect'
 
     steps:
       - name: 📥 Checkout Source
@@ -92,8 +96,8 @@ jobs:
           echo "📊 GIT STATUS ($TARGET_BRANCH)"
           echo "=============================================="
           
-          git config user.name "Cursor-Sync-Bot"
-          git config user.email "bot@cursor-rules.com"
+          git config user.name "mynameistito"
+          git config user.email "github@mynameistito.com"
           
           git add .cursor
           
