@@ -4,10 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - '.cursor/rules/**'
-      - '.cursor/commands/**'
-      - '.cursor/worktrees.json'
+    # paths:
+    # - '.cursor/rules/**'
+    # - '.cursor/commands/**'
+    # - '.cursor/worktrees.json'
   workflow_dispatch:
 
 jobs:
