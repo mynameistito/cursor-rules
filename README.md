@@ -56,21 +56,40 @@ For automated setup, use the bootstrap workflow defined in the rules:
 ## 📁 Repository Structure
 
 ```
-.cursor/
-├── rules/              # Rule definitions (.mdc files)
-│   ├── general.mdc
-│   ├── bun.mdc
-│   ├── react-nextjs.mdc
-│   ├── git.mdc
-│   ├── cloudflare.mdc
-│   ├── drizzle.mdc
-│   ├── rule-architect.mdc
-│   ├── global-rule-manager.mdc
-│   ├── plan.mdc
-│   └── prd-file-structure-and-taskmanagement.mdc
-├── commands/           # Custom Cursor commands
-├── plans/             # Project planning documents (gitignored)
-└── temp/              # Temporary files (gitignored)
+cursor-rules/
+├── README.md          # This file - project documentation
+├── LICENSE            # MIT License
+├── .gitignore         # Git ignore patterns
+├── .gitattributes     # Git attributes for line endings
+└── .cursor/
+    ├── rules/         # Rule definitions (.mdc files)
+    │   ├── general.mdc
+    │   ├── bun.mdc
+    │   ├── react-nextjs.mdc
+    │   ├── git.mdc
+    │   ├── cloudflare.mdc
+    │   ├── drizzle.mdc
+    │   ├── rule-architect.mdc
+    │   ├── global-rule-manager.mdc
+    │   ├── plan.mdc
+    │   └── prd-file-structure-and-taskmanagement.mdc
+    ├── commands/      # Custom Cursor commands
+    │   ├── build.md
+    │   ├── build.mdc
+    │   ├── commit.md
+    │   ├── commit.mdc
+    │   ├── issues.md
+    │   ├── issues.mdc
+    │   ├── planning-agent.md
+    │   └── planning-agent.mdc
+    ├── plans/         # Project planning documents (gitignored)
+    │   └── [various .plan.md and .md files]
+    ├── temp/          # Temporary files (gitignored)
+    │   ├── landing-phase-4.txt
+    │   └── placeholders.txt
+    ├── todo/          # Todo items (gitignored)
+    │   └── zaraz-analytics.txt
+    └── worktrees.json # Git worktree configuration
 ```
 
 ## 🛠️ Rule Format
