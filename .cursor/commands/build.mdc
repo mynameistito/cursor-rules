@@ -1,0 +1,121 @@
+---
+name: /build → Ultracite Self-Healing Build Mode + Auto-Update Plan Tasks
+description: Executes plan → ticks Cursor tasks → auto-fixes Biome/TS → updates original plan file with [x]
+trigger: regex
+match: ^/build\s*
+alwaysApply: false
+---
+
+You are now in **Ultracite Self-Healing Build Mode with Plan Auto-Update**.
+
+### 1. FORCE FULL MCP STACK (permanently auto-approved)
+Ensure these exact entries exist in `C:\Users\mynameistito\.cursor\mcp.json`:
+
+```json
+{
+  "servers": {
+    "sequential-thinking": { "command": "npx", "args": ["-y", "@modelcontextprotocol/server-sequential-thinking"] },
+    "cloudflare-docs": {
+      "command": "npx",
+      "args": ["mcp-remote@latest", "https://docs.mcp.cloudflare.com/sse"],
+      "autoApprove": ["search_cloudflare_documentation", "migrate_pages_to_workers_guide"]
+    },
+    "Context7": {
+      "command": "npx",
+      "args": ["-y", "@upstash/context7-mcp@latest"],
+      "autoApprove": ["resolve-library-id", "get-library-docs"]
+    },
+    "sideways": {
+      "url": "https://usesideways.com/mcp",
+      "autoApprove": [
+        "get-sideways-strategy-category-reframe",
+        "get-sideways-strategy-category-reduce",
+        "get-sideways-strategy-category-expand",
+        "get-sideways-strategy-category-disrupt",
+        "get-sideways-strategy-category-embody",
+        "get-sideways-strategy-category-pause"
+      ]
+    }
+  }
+}
+```
+
+All tools/prompts/resources are 100 % auto-approved.
+
+### 2. PLAN FILE REQUIREMENT
+User must @-mention exactly one file ending in `.md`, `.mdc`, or `.plan.md`.
+
+If none → respond exactly:
+
+> **ERROR**: No plan file tagged. Please @-mention your plan (e.g. `@my-plan.plan.md`) and try again.
+
+Stop.
+
+### 3. PHASE FILTERING (must obey 100 %)
+Detect any phase scoping in the message (case-insensitive). Default = entire plan.
+
+### 4. EXECUTION + PLAN AUTO-UPDATE + SELF-HEALING
+Start response exactly:
+
+```
+BUILD MODE ACTIVATED — Ultracite Self-Healing + Plan Auto-Update
+MCP stack fully loaded and auto-approved
+
+Executing: {@filename}
+Scope: {All phases | Phase 3 only | Phases 1–5 | etc.}
+```
+
+Then:
+
+1. Parse only the selected phases from the plan file.
+2. Convert every task in those phases into live Cursor tasks:
+   ```cursor
+   - [ ] 1. Create new Worker project
+   - [ ] 2. Add R2 binding
+   - [x] 3. Implement rate limiting
+   ```
+3. As soon as a task is 100 % complete and verified →  
+   **immediately**:
+   - Tick it here: `- [x]`
+   - **Edit the original plan file** and change its corresponding line from `- [ ]` → `- [x]` (or add `[x]` if missing)
+
+4. After the very last selected phase is fully ticked in both places → add:
+
+   ```cursor
+   - [ ] Final verification — Ultracite + Biome + TypeScript (auto-fix loop)
+   ```
+
+5. SELF-HEALING VERIFICATION LOOP (repeat until perfect)
+
+   Run these exact commands in order:
+
+   ```bash
+   bunx @biomejs/biome format --write . --max-diagnostics none
+   bunx @biomejs/biome check --write . --max-diagnostics none
+   bunx @biomejs/biome ci . --max-diagnostics none
+   bunx tsc --noEmit
+   ```
+
+   • If all pass cleanly → tick final task `- [x]` and end with:
+
+   ```
+   ALL PHASES COMPLETE + VERIFICATION PASSED
+   Original plan file automatically updated with [x]
+   Project is 100 % Ultracite-compliant and production-ready
+   ```
+
+   • If any fail → show output, fix every issue (you have full edit rights), re-run loop (max 5 cycles).  
+     On cycle 5 failure → leave unticked and ask user.
+
+### 5. NON-NEGOTIABLE LAWS
+- Never mark anything complete unless it truly is
+- Never violate `ultracite.mdc` (alwaysApply: true god rule)
+- Always update the original plan file with `[x]` the instant a task is done
+- Never skip the self-healing verification loop
+- You are allowed and required to edit the plan file and any other file in the workspace
+
+Now wait for the user to type:
+
+`/build @auth-system.plan.md only phase 2`
+
+or any variation — and deliver literal perfection, automatically.

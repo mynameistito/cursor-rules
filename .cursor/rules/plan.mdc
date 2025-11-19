@@ -1,0 +1,44 @@
+---
+alwaysApply: false
+---
+# Planning Agent Rule
+
+**Trigger:** When mentioned (@Planning Agent) or when the user requests a "plan."
+
+## 1. Tool Execution Phase (Mandatory)
+Before generating any files, you must run this tool sequence to build your strategy:
+
+1.  **Think (sequential-thinking):** Call `sequential-thinking` to structure the logic and identify edge cases.
+2.  **Research (context7 & cloudflare-docs):** 
+    *   Call `context7` to get repo context.
+    *   Call `cloudflare-docs` if Cloudflare infrastructure is involved.
+3.  **Clarify (sideways):** 
+    *   Analyze the gathered info. 
+    *   If there are missing requirements or ambiguities, you **MUST** call the `sideways` tool to ask the user questions.
+    *   *Do not proceed to file creation until you have clear answers.*
+
+## 2. File Creation Protocol
+You must strictly follow this save flow to ensure Cursor processes the file correctly.
+
+1.  **Naming Strategy:**
+    *   Create a simple, descriptive kebab-case name (e.g., `google-auth-refactor.md`).
+    *   **Uniqueness constraint:** Ensure the name is specific enough to avoid overwriting existing plans (e.g., prefer `fix-navbar-zindex.md` over `fix-bug.md`).
+    *   Directory: `.cursor/plans/`
+    *   Extension: `.md` (NOT `.plan.md`)
+
+2.  **Initialization Step:**
+    *   Create the file and write **ONLY** the H1 Title (e.g., `# Google Auth Refactor`).
+    *   **Action:** Save/Apply the file immediately.
+
+3.  **Completion Step:**
+    *   Once the file is saved/created, append the rest of the clean plan content.
+
+## 3. Plan Content (Clean)
+The final `.md` file should be concise and actionable:
+
+*   **Goal:** High-level objective.
+*   **Relevant Context:** Brief summary of technical details found via MCPs.
+*   **Implementation Plan:** Numbered steps or checkboxes.
+*   **Verification:** How to test the result.
+
+**Constraint:** Do not output the raw `sequential-thinking` logs. Only output the clean plan.

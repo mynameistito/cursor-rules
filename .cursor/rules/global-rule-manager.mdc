@@ -1,0 +1,63 @@
+---
+description: Global Bootstrap. Syncs central rules from GitHub and scaffolds local project/plan directories.
+alwaysApply: true
+---
+# Global Project Bootstrap
+
+**Trigger:** When the user says "Setup rules", "Init project", "Sync rules", or "Update configuration".
+
+## 1. Configuration
+*   **Rules Source:** `https://github.com/YOUR_GITHUB_USERNAME/YOUR_RULES_REPO.git`
+*   **Target Directory:** `.cursor/rules`
+
+## 2. Execution Protocol
+Execute the following sequence in the terminal to bootstrap the environment.
+
+### Phase A: Local Context (Project Specific)
+Create the directories for the Planning Agents. These will be **tracked** by this project's git to save history.
+```bash
+# 1. Create Directory Structure
+mkdir -p .cursor/plans
+mkdir -p .cursor/project
+
+# 2. Ensure git tracks these folders (even if empty)
+touch .cursor/plans/.gitkeep
+touch .cursor/project/.gitkeep
+
+echo "✅ Local context directories created (.cursor/plans, .cursor/project)."
+```
+
+### Phase B: The "Brain" (Global Rules Sync)
+Clone/Pull the shared rules from GitHub. These must be **ignored** by this project's git to prevent nested repository issues.
+
+**Logic:**
+1.  Check if `.cursor/rules` exists.
+2.  **If Missing (Install):** Clone the repo and update `.gitignore`.
+3.  **If Present (Update):** Pull the latest changes.
+
+```bash
+if [ -d ".cursor/rules/.git" ]; then
+    # SCENARIO: UPDATE
+    echo "🔄 Updating rules..."
+    cd .cursor/rules && git pull && cd ../..
+else
+    # SCENARIO: INSTALL
+    echo "⬇️  Cloning rules..."
+    mkdir -p .cursor
+    git clone https://github.com/YOUR_GITHUB_USERNAME/YOUR_RULES_REPO.git .cursor/rules
+    
+    # PREVENT NESTED REPO: Add to .gitignore if not present
+    if ! grep -q ".cursor/rules" .gitignore 2>/dev/null; then
+        echo "" >> .gitignore
+        echo "# Cursor Rules (Managed via Global Sync)" >> .gitignore
+        echo ".cursor/rules/" >> .gitignore
+        echo "🙈 Added .cursor/rules/ to .gitignore"
+    fi
+fi
+```
+
+## 3. Final Validation
+1.  Run `ls -R .cursor` to confirm structure.
+2.  **Crucial Instruction:** Tell the user:
+    > "Setup complete. Please click **'Resync Context'** (or restart Cursor) to load the new rules."
+```

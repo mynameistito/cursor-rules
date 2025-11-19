@@ -1,0 +1,85 @@
+### The Improved Rule
+
+Copy this into `.cursor/rules/prd-manager.mdc` (or your `.cursorrules`).
+
+```markdown
+---
+description: Manages Project Requirements (PRD), Design, and Master Task List in .cursor/project.
+globs: .cursor/project/*.md
+alwaysApply: false
+---
+# Project Context & Task Management
+
+**Trigger:** When initializing a project, checking requirements, or updating global status.
+
+## 1. Directory Structure (Long-Term Memory)
+The `.cursor/project/` directory is the **Single Source of Truth** for the application.
+*   `requirements.md`: The "What". Product goals, user stories, and strict constraints.
+*   `design.md`: The "How". Architecture, schema, UI/UX, and tech stack choices.
+*   `tasks.md`: The "Status". A living checklist of the entire project roadmap.
+
+**Relationship to `.cursor/plans/`:**
+*   `.cursor/project/*`: High-level, permanent documentation.
+*   `.cursor/plans/*`: Ephemeral, low-level implementation steps for specific features.
+*   *Workflow:* Read `requirements.md` -> Create a detailed `.cursor/plans/feature.md` -> Execute -> Update `tasks.md`.
+
+## 2. Initialization Protocol
+If these files are missing, offer to create them immediately with these standard templates:
+
+### `requirements.md` Template
+```markdown
+# Project Requirements
+## Overview
+*   **Goal:** [One sentence summary]
+*   **Tech Stack:** [Bun, React, etc]
+
+## Core Features
+- [ ] Feature A: Description...
+- [ ] Feature B: Description...
+
+## Constraints & Standards
+*   [e.g., "Must use Ultracite Biome config"]
+```
+
+### `design.md` Template
+```markdown
+# System Design
+## Architecture
+*   [Frontend vs Backend split]
+*   [Database Schema key points]
+
+## UI/UX Patterns
+*   [Color palette, navigation structure]
+```
+
+### `tasks.md` Template
+```markdown
+# Master Task List
+- [ ] Phase 1: Setup & Infrastructure (Priority: High)
+    - [ ] Initialize Repo & Tooling
+- [ ] Phase 2: Core Features
+    - [ ] Implement Auth
+```
+
+## 3. Task Management Guidelines (Simplified)
+Do NOT use complex IDs (T001). Use standard Markdown nesting.
+
+### Format
+- **Hierarchy:** Use indentation to show subtasks.
+- **Priority:** Tag high-level items with `(Priority: High/Med/Low)`.
+- **Status:** Use standard markdown checkboxes `[ ]` and `[x]`.
+
+### Completion Workflow
+When a task is finished:
+1.  Mark the box with `[x]`.
+2.  **Add a Summary:** Add a sub-bullet summary describing *what* was done (e.g., specific files touched or API endpoints created).
+    *   *Example:*
+        ```markdown
+        - [x] Implement Login API (Priority: High)
+            - Summary: Created `POST /api/login` with Zod validation and JWT signing.
+        ```
+
+## 4. Agent Workflow
+1.  **Read:** Before starting any major work, read `requirements.md` to ensure alignment.
+2.  **Update:** After completing a generic "Plan" (from `.cursor/plans`), open `tasks.md` and mark the corresponding high-level task as complete.
+3.  **Refine:** If you discover new requirements while coding, ask the user if you should add them to `requirements.md` rather than just hacking them in.

@@ -1,0 +1,90 @@
+---
+description: Next.js 14+ (App Router), React, Shadcn UI, Zustand, and TanStack Query standards.
+globs: **/*.tsx, **/*.ts, **/*.jsx, **/*.js
+alwaysApply: true
+---
+# Next.js & React Guidelines
+
+**Trigger:** Apply to all React components, hooks, and Next.js routing files.
+
+## 1. Architecture: App Router (Strict)
+*   **Default to Server:** All components are Server Components (RSC) by default.
+*   **Client Boundary:** Add `'use client'` at the top **ONLY** if you use:
+    *   Hooks (`useState`, `useEffect`, `useQuery`).
+    *   Event handlers (`onClick`, `onChange`).
+    *   Browser-only APIs (`window`, `localStorage`).
+*   **Fetching Strategy:**
+    *   **Server Components:** Fetch directly using `await db.call()` or external APIs.
+    *   **Client Components:** Use **TanStack Query** (`useQuery`).
+    *   **Mutations:** Use **Server Actions** defined in `src/actions/`.
+
+## 2. UI Library (Shadcn UI)
+*   **Components:** ALWAYS use existing Shadcn components from `@/components/ui` before creating custom ones.
+    *   *Example:* `import { Button } from "@/components/ui/button"`
+*   **Styling:**
+    *   Use **Tailwind CSS**.
+    *   **Conditional Classes:** Use the `cn()` utility (clsx + tailwind-merge).
+    *   *Pattern:* `className={cn("base-class", condition && "conditional-class")}`.
+*   **Icons:** Use `lucide-react`.
+
+## 3. State Management
+*   **Global State:** Use **Zustand**.
+    *   Create stores in `@/store/useMyStore.ts`.
+*   **Local State:** Use `useState` for simple UI toggles.
+*   **URL State:** Prefer using URL Search Params (`useSearchParams`) for filter/sort state (shareable URLs).
+
+## 4. Component Structure (Best Practice)
+*   **Definition:** Use **Named Exports** (`export const UserProfile = ...`).
+*   **Props:**
+    *   Define `interface` (not `type`) for props.
+    *   Avoid `React.FC`. Explicitly type the arguments.
+*   **Files:**
+    *   If a file exceeds 150 lines, extract sub-components or logic hooks (`useProfileLogic.ts`).
+
+## 5. Forms & Validation
+*   **Library:** **React Hook Form** + **Zod**.
+*   **Schema:** Define Zod schemas for ALL inputs.
+*   **Submission:** Submit forms to Server Actions.
+    ```tsx
+    // Action Pattern
+    const { trigger, isMutating } = useMutation({
+      mutationFn: async (data) => serverAction(data)
+    });
+    ```
+
+## 6. Performance
+*   **Images:** ALWAYS use `next/image` with defined `width`/`height` or `fill`.
+*   **Lazy Loading:** Use `dynamic(() => import(...))` for heavy client components (charts, maps).
+*   **Fonts:** Use `next/font` (never import CSS fonts manually).
+
+## Example Component (Shadcn + Tailwind)
+```tsx
+"use client";
+
+import { useState } from "react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { LucideLoader2 } from "lucide-react";
+
+interface SubmitButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  isLoading?: boolean;
+  label: string;
+}
+
+export const SubmitButton = ({ 
+  isLoading = false, 
+  label, 
+  className, 
+  ...props 
+}: SubmitButtonProps) => {
+  return (
+    <Button 
+      disabled={isLoading} 
+      className={cn("w-full transition-all", className)} 
+      {...props}
+    >
+      {isLoading && <LucideLoader2 className="mr-2 h-4 w-4 animate-spin" />}
+      {label}
+    </Button>
+  );
+};

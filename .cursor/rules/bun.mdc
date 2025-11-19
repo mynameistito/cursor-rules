@@ -1,0 +1,56 @@
+---
+description: Enforces strict Bun workflow: Native Bun Test, Biome, and bunx.
+globs: package.json, **/*.ts, **/*.js, **/*.tsx, **/*.jsx, biome.jsonc
+alwaysApply: true
+---
+# Bun & Biome Workflow Standards
+
+**Trigger:** Active globally. Apply these rules to all script execution, package management, and configuration tasks.
+
+## 1. Package Management (Strict)
+*   **Installer:** ALWAYS use `bun install` or `bun add`.
+*   **Lockfile:** `bun.lockb` is the single source of truth. Delete `package-lock.json` or `yarn.lock` immediately if found.
+*   **Manifest:** Enforce specific version lock in `package.json`:
+    ```json
+    "packageManager": "bun@1.3.x"
+    ```
+
+## 2. Script & Command Execution
+*   **Scripts:** Replace `npm run` with `bun run`.
+*   **CLIs:** ALWAYS use `bunx` (e.g., `bunx drizzle-kit push`). Never use `npx`, `pnpm dlx`, or `yarn dlx`.
+*   **Watch Mode Rules:**
+    *   **Web Frameworks (Next/Vite/Remix):** Do **NOT** use `bun --watch`. Use standard `bun run dev` to preserve Hot Module Replacement (HMR).
+    *   **Standalone Scripts/Servers:** DO use `bun --watch` (e.g., `bun --watch server.ts`).
+
+## 3. Testing (Native Bun)
+*   **Runner:** Use the built-in `bun test` runner. Do not install Jest or Vitest unless explicitly requested.
+*   **Syntax:** Import strict native primitives:
+    ```typescript
+    import { describe, test, expect } from "bun:test";
+    ```
+*   **Mocking:** Use `bun:test` mocks (`mock()`, `spyOn()`).
+
+## 4. Linting & Formatting (Biome)
+*   **Tool:** Use **Biome** exclusively.
+*   **Config:** Look for `biome.jsonc` (supports comments).
+*   **Command:** Use `bunx @biomejs/biome check --write` to format and lint in one pass.
+*   **Migration:** If `.eslintrc` or `.prettierrc` exists, suggest migrating rules to `biome.jsonc` and deleting them.
+
+## 5. Performance
+*   **The `--bun` flag:** Use this when running Node-compatible scripts to force them into the Bun runtime for speed (e.g., `bun --bun run build`).
+
+## Example `package.json` Configuration
+```json
+{
+  "type": "module",
+  "packageManager": "bun@1.3.x",
+  "scripts": {
+    "dev": "bun run next dev",
+    "build": "bun run next build",
+    "start": "bun run next start",
+    "lint": "bunx @biomejs/biome check --write",
+    "test": "bun test",
+    "db:push": "bunx drizzle-kit push",
+    "worker": "bun --watch src/worker.ts"
+  }
+}

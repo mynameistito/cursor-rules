@@ -1,0 +1,57 @@
+---
+description: Drizzle ORM (D1/SQLite) standards. Schema definition, migration workflow, and D1 best practices.
+globs: src/db/**/*.ts, drizzle.config.ts, **/*.ts
+alwaysApply: false
+---
+# Drizzle ORM (D1/SQLite) Standards
+
+**Trigger:** When modifying database schemas, migrations, or writing D1 queries.
+
+## 1. Schema Definitions (SQLite)
+*   **Base:** All tables must be defined using `sqliteTable`.
+*   **IDs:** Use integer auto-increment for standard tables:
+    ```typescript
+    id: integer("id", { mode: "number" }).primaryKey({ autoIncrement: true })
+    ```
+*   **Booleans:** SQLite lacks booleans. Use integer with mode:
+    ```typescript
+    isActive: integer("is_active", { mode: "boolean" }).notNull().default(false)
+    ```
+*   **Timestamps:** Use integer (Unix epoch) or text (ISO string).
+    *   *Preference:* `integer("created_at", { mode: "timestamp" }).default(sql`(unixepoch)`)`
+*   **Exports:** Always export inferred types:
+    ```typescript
+    export type User = typeof users.$inferSelect;
+    export type NewUser = typeof users.$inferInsert;
+    ```
+
+## 2. Query Patterns (Relational)
+*   **API:** Use the **Query Builder** (`db.query.users.findMany`) over raw SQL where possible.
+*   **Joins:** Define strict relations in `schema.ts` using `relations()` to enable `with: { ... }` syntax.
+*   **Performance (D1 Limits):**
+    *   Avoid massive nested queries (D1 has variable binding limits).
+    *   If fetching > 100 rows with 3+ relations, split into two queries.
+
+## 3. Migration Workflow (Wrangler-Integrated)
+D1 works best when `wrangler` handles the actual migration application, while Drizzle generates the SQL.
+
+1.  **Modify:** Edit `src/db/schema.ts`.
+2.  **Generate:** `bunx drizzle-kit generate`
+    *   *Output:* Creates `.sql` files in `drizzle/`.
+3.  **Apply (Dev):** `bunx wrangler d1 migrations apply <DB_NAME> --local`
+4.  **Apply (Prod):** `bunx wrangler d1 migrations apply <DB_NAME> --remote`
+
+*   *Prototyping:* You may use `bunx drizzle-kit push` for local rapid prototyping, but **NEVER** use `push` in production.
+
+## 4. Client Instantiation
+*   **Driver:** `drizzle-orm/d1`.
+*   **Context:** Pass the environment binding correctly:
+    ```typescript
+    import { drizzle } from 'drizzle-orm/d1';
+    // Inside a Worker/Pages Function
+    const db = drizzle(env.DB, { schema });
+    ```
+
+## 5. Seed & Reset
+*   **Local Reset:** `bunx wrangler d1 migrations apply <DB_NAME> --local --dry-run` (Check first).
+*   **Seeding:** Create a dedicated `src/db/seed.ts` script compatible with Bun.

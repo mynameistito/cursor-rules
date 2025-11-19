@@ -1,0 +1,90 @@
+---
+description: Master Coding Standard. React 19, Next.js, Ultracite (Biome), Bun, TSDoc, and Agent Best Practices.
+globs: **/*.ts, **/*.tsx, **/*.js, **/*.jsx, **/*.json, **/*.jsonc
+alwaysApply: true
+---
+# Master Coding & Style Guidelines
+
+**Trigger:** Apply these standards to ALL code generation, refactoring, and formatting tasks.
+
+## 1. The Ultracite Toolchain (Bun Powered)
+This project uses **Ultracite** (Biome) for strict linting and formatting.
+*   **Commands:**
+    *   Fix: `bunx ultracite fix` (Run this if simple lint errors occur).
+    *   Check: `bunx ultracite check`
+*   **Config:** Adhere to `biome.jsonc`.
+*   **Strictness:**
+    *   **No `any`:** Explicitly forbidden. Use `unknown` + Zod validation.
+    *   **No `var`:** Use `const` (preferred) or `let`.
+    *   **Equality:** Always use `===`.
+
+## 2. React 19 & Next.js Architecture
+*   **React 19 Primitives:**
+    *   **Refs:** Pass `ref` directly as a prop. **DO NOT** use `forwardRef`.
+    *   **Meta:** Use Document Metadata in App Router layouts, not `next/head`.
+*   **App Router:**
+    *   **Default to Server:** Components are Server Components (RSC) by default.
+    *   **Client Boundary:** Add `'use client'` only when needing hooks/interactivity.
+*   **Styles:**
+    *   Tailwind CSS with `cn()` utility (clsx + twMerge).
+    *   No inline styles.
+
+## 3. Agent-Optimized Patterns (Context Awareness)
+To ensure AI and Human readability:
+*   **Named Exports:** ALWAYS use `export const Component = ...`. **DO NOT** use `export default`.
+    *   *Why:* Prevents import name hallucinations and simplifies refactoring.
+*   **Interface-First:** Define props interfaces at the top of the file.
+*   **Modularity:**
+    *   **Soft Limit:** Target < 200 lines per file.
+    *   **Strategy:** Extract complex logic into custom hooks (`useFeatureLogic.ts`) or sub-components.
+
+## 4. Documentation (TSDoc Standard)
+*   **Format:** Use TSDoc (`/** ... */`) for all exported components, functions, and interfaces.
+*   **Constraint:** NEVER use JSDoc (`// @param`) for exported symbols.
+*   **Content:**
+    *   **No "What":** Do not describe the code (e.g., "Adds two numbers").
+    *   **Yes "Why":** Explain business context or edge cases.
+    *   **Yes "Example":** Agents prefer examples. Use the `@example` tag heavily.
+    ```typescript
+    /**
+     * Calculates user churn rate.
+     * @remarks specific logic regarding grace periods applies here.
+     * @example calculateChurn(users, 30)
+     */
+    ```
+
+## 5. Modern Syntax & Imports
+*   **Async/Await:** Always `await` promises. Do not use `.then()` chains.
+*   **Loops:** Prefer `for...of` over `.forEach()` (better performance and async support).
+*   **Imports:**
+    *   **Aliases:** ALWAYS use path aliases (e.g., `@/components/Button`) over relative (`../../`).
+    *   **Organization:** Group imports: `External` -> `Internal Aliased` -> `Relative`.
+
+## 6. Robustness & Observability
+*   **Validation:** **MANDATORY** usage of **Zod** for all external inputs (API args, Form data, URL params).
+*   **Structured Logging:**
+    *   **Never** log raw strings for errors.
+    *   **Format:** `console.error({ event: "auth_failed", error: err.message, stack: err.stack })`.
+*   **Error Handling:**
+    *   Wrap async operations in `try/catch`.
+    *   Never swallow errors silently.
+
+## 7. Testing (Bun Native)
+*   **Engine:** Use `bun:test`.
+*   **Pattern:**
+    ```typescript
+    import { describe, test, expect } from "bun:test";
+    // Test user outcomes, not internal state
+    ```
+*   **Mocking:** Use `bun:test` native mocks/spies.
+
+## 8. Accessibility (a11y)
+*   **Semantic HTML:** Use `<button>`, `<nav>`, `<section>` instead of `<div>`.
+*   **Attributes:**
+    *   `aria-label` required for icon-only buttons.
+    *   `alt` text required for all images (use empty string for decorative).
+*   **Links:** If `target="_blank"`, must include `rel="noopener"`.
+
+## 9. Workflow & Diffing
+*   **Changes:** When suggesting edits, show clear `+`/`-` diffs.
+*   **Formatting:** If a code block is messy, instruct the user: "Run `bunx ultracite fix` to align this file."

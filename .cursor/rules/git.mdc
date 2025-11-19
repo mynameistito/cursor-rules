@@ -1,0 +1,40 @@
+---
+description: Git standards. Enforces Conventional Commits and atomic changes.
+globs: .git/*
+alwaysApply: false
+---
+# Git & Commit Standards
+
+**Trigger:** When generating commit messages, staging files, or managing version control.
+
+## 1. Conventional Commits (Strict)
+Format: `<type>(<scope>): <description>`
+
+*   **Types:**
+    *   `feat`: New feature.
+    *   `fix`: Bug fix.
+    *   `chore`: Configs, dependencies, tool updates (no prod code).
+    *   `refactor`: Code restructuring (no logic change).
+    *   `docs`: Documentation only.
+    *   `style`: Formatting/Ultracite fixes.
+    *   `test`: Adding tests.
+*   **Scope:** The module affected (e.g., `auth`, `db`, `ui`).
+
+## 2. Writing Rules
+1.  **Imperative Mood:** Use "add" not "added", "fix" not "fixed".
+2.  **Lowercase:** The description must be lowercase.
+3.  **No Period:** No trailing dot.
+4.  **Atomic:** Do not squash unrelated features into one commit.
+
+## 3. AI Workflow
+When asked to "Commit this" or "Save changes":
+1.  **Analyze:** Review `git diff` to identify the core change.
+2.  **Categorize:** Pick the correct `<type>`.
+3.  **Draft:** Generate the message.
+    *   *Example:* `feat(db): add user schema and d1 migration`
+4.  **Execute:** `git add . && git commit -m "..."` (if permitted).
+
+## 4. Pre-Commit Checklist
+Before committing, ensure:
+*   `bunx ultracite check` passes.
+*   No `console.log` (unless structured logging) or commented-out code remains.

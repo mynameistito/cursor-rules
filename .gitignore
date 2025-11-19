@@ -1,0 +1,87 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+bun.lockb
+
+# Testing
+coverage/
+*.lcov
+.nyc_output
+
+# Production
+build/
+dist/
+.next/
+out/
+.vercel
+.turbo
+
+# Environment variables
+.env
+.env*.local
+.env.production
+.env.development
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Local development
+.DS_Store
+*.pem
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Cloudflare
+.wrangler/
+.dev.vars
+wrangler.toml.bak
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+migrations/
+
+# Cursor specific
+.cursor/plans/
+.cursor/temp/
+.cursor/todo/
+
+# Logs
+logs/
+*.log
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.Spotlight-V100
+.Trashes
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.temp/
+
