@@ -1,16 +1,17 @@
-name: Sync Cursor Rules (Bulletproof)
+name: "Sync Cursor Rules (Test Mode: Always Ping)"
 
 on:
   push:
     branches:
       - main
     # paths:
-    # - '.cursor/rules/**'
-    # - '.cursor/commands/**'
-    # - '.cursor/worktrees.json'
+    #   - '.cursor/rules/**'
   workflow_dispatch:
 
 jobs:
+  # ------------------------------------------------------------------
+  # JOB 1: THE WORKER
+  # ------------------------------------------------------------------
   sync-configuration:
     name: Sync ➔ ${{ matrix.repo }}
     runs-on: ubuntu-latest
@@ -22,12 +23,11 @@ jobs:
           - 'mynameistito/cursor-rules-test-1'
           - 'mynameistito/cursor-rules-test-2'
           
-          #KillzoneGaming
+          # KillzoneGaming
           - 'KillzoneGaming/kzg-servers-connect'
           - 'KillzoneGaming/kzg-workshop-map-puller'
           - 'KillzoneGaming/kzg-website-nextjs'
           - 'KillzoneGaming/kzg-discord-oidc-worker'
-          
 
     steps:
       - name: 📥 Checkout Source
@@ -41,51 +41,31 @@ jobs:
           repository: ${{ matrix.repo }}
           token: ${{ secrets.GH_PAT_SYNC }}
           path: target_repo
-          fetch-depth: 0 # Required to detect branches
+          fetch-depth: 0 
 
       - name: ⚙️ Detect Default Branch
         working-directory: target_repo
         id: branch_info
         run: |
-          # Detect the default branch (main, master, trunk, etc.)
           DEFAULT_BRANCH=$(git remote show origin | grep 'HEAD branch' | cut -d' ' -f5)
-          echo "Detected default branch: $DEFAULT_BRANCH"
           echo "branch=$DEFAULT_BRANCH" >> $GITHUB_OUTPUT
-          
-          # Checkout that branch explicitly
           git checkout $DEFAULT_BRANCH
 
-      - name: 🔄 Sync Files (Verbose)
+      - name: 🔄 Sync Files
         run: |
-          echo "=============================================="
           echo "🚀 SYNCING TO: ${{ matrix.repo }}"
-          echo "=============================================="
-          
           mkdir -p target_repo/.cursor
 
-          # --- SYNC RULES ---
-          echo ""
-          echo "📂 SYNCING RULES..."
           rm -rf target_repo/.cursor/rules
           if [ -d "source_repo/.cursor/rules" ]; then
             cp -rv source_repo/.cursor/rules target_repo/.cursor/
-          else
-            echo "⚠️ Source has no 'rules' folder. Skipping."
           fi
 
-          # --- SYNC COMMANDS ---
-          echo ""
-          echo "📂 SYNCING COMMANDS..."
           rm -rf target_repo/.cursor/commands
           if [ -d "source_repo/.cursor/commands" ]; then
             cp -rv source_repo/.cursor/commands target_repo/.cursor/
-          else
-            echo "⚠️ Source has no 'commands' folder. Skipping."
           fi
 
-          # --- SYNC WORKTREES CONFIG ---
-          echo ""
-          echo "📄 SYNCING CONFIG..."
           if [ -f "source_repo/.cursor/worktrees.json" ]; then
              cp -v source_repo/.cursor/worktrees.json target_repo/.cursor/worktrees.json
           fi
@@ -94,38 +74,97 @@ jobs:
         working-directory: target_repo
         run: |
           TARGET_BRANCH=${{ steps.branch_info.outputs.branch }}
-          
-          echo ""
-          echo "=============================================="
-          echo "📊 GIT STATUS ($TARGET_BRANCH)"
-          echo "=============================================="
-          
           git config user.name "mynameistito"
           git config user.email "github@mynameistito.com"
-          
           git add .cursor
           
           STATUS=$(git status -s)
-          
           if [[ -n "$STATUS" ]]; then
-            echo "📝 DETECTED CHANGES:"
-            echo "$STATUS"
-            echo ""
-            
-            # Use [skip ci] so this update doesn't trigger 
-            # heavy build pipelines in the private repo.
             git commit -m "chore(cursor): sync shared rules from source [skip ci]"
-            
-            echo "🔄 Pulling latest changes to prevent conflicts..."
             git pull --rebase origin $TARGET_BRANCH
-            
-            echo "🚀 Pushing changes to '$TARGET_BRANCH'..."
-            if git push origin $TARGET_BRANCH; then
-              echo "✅ SUCCESS: ${{ matrix.repo }} updated."
-            else
-              echo "❌ FAILURE: Could not push to ${{ matrix.repo }}."
-              exit 1
-            fi
+            git push origin $TARGET_BRANCH
           else
-            echo "✨ NO CHANGES: Already up to date."
+            echo "✨ NO CHANGES"
           fi
+
+      - name: Report Failure
+        if: failure()
+        run: |
+          SAFE_NAME=$(echo "${{ matrix.repo }}" | tr '/' '-')
+          echo "${{ matrix.repo }}" > "failed_$SAFE_NAME.txt"
+
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-${{ strategy.job-index }}
+          path: failed_*.txt
+          retention-days: 1
+
+  # ------------------------------------------------------------------
+  # JOB 2: THE REPORTER (Always Runs + Always Pings)
+  # ------------------------------------------------------------------
+  notify-discord:
+    needs: sync-configuration
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Download Failure Reports
+        uses: actions/download-artifact@v4
+        with:
+          pattern: failure-*
+          merge-multiple: true
+          path: failures
+
+      - name: 🚨 Check Status & Ping
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          LOG_URL="${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          
+          # CHECK IF FAILURES EXIST
+          if [ -d "failures" ] && [ "$(ls -A failures)" ]; then
+            # --- FAILURE MODE (Red) ---
+            echo "❌ Failures detected."
+            
+            LIST_STRING=""
+            for f in failures/*.txt; do
+              REPO_NAME=$(cat "$f")
+              LIST_STRING="$LIST_STRING\\n- \`$REPO_NAME\`"
+            done
+
+            # ⚠️ CHANGE USER ID HERE IF NEEDED
+            MESSAGE_CONTENT="⚠️ <@611746802122620937> **Sync Failed!** Issues detected."
+            EMBED_DESC="$LIST_STRING"
+            COLOR=15548997 # Red
+          
+          else
+            # --- SUCCESS MODE (Green) ---
+            echo "✅ Success. Sending test ping."
+            
+            MESSAGE_CONTENT="✅ <@611746802122620937> **Test Notification:** Sync Complete!"
+            EMBED_DESC="All repositories were checked and are 100% in sync."
+            COLOR=5763719 # Green
+          fi
+
+          # SEND PAYLOAD
+          cat <<EOF > discord_payload.json
+          {
+            "username": "Cursor Sync Bot",
+            "content": "$MESSAGE_CONTENT",
+            "embeds": [
+              {
+                "description": "$EMBED_DESC",
+                "color": $COLOR,
+                "fields": [
+                  {
+                    "name": "View Logs",
+                    "value": "[👉 Click here]($LOG_URL)"
+                  }
+                ]
+              }
+            ]
+          }
+          EOF
+
+          curl -H "Content-Type: application/json" -X POST -d @discord_payload.json "$DISCORD_WEBHOOK"
