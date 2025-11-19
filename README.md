@@ -95,7 +95,6 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   └── planning-agent.md
 │   ├── rules/
 │   │   ├── bun.mdc
-│   │   ├── cloudflare - Copy.mdc
 │   │   ├── cloudflare.mdc
 │   │   ├── drizzle.mdc
 │   │   ├── general.mdc
