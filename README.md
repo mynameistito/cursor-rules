@@ -1,12 +1,19 @@
 # Cursor Rules
-
+<!-- DESCRIPTION START -->
 A comprehensive collection of coding standards, workflow guidelines, and best practices for modern web development with Cursor IDE. This repository provides AI-powered rules that enforce consistent patterns across your projects.
+<!-- DESCRIPTION END -->
 
+<!-- OVERVIEW START -->
 ## 📋 Overview
 
 This repository contains structured rules (`.mdc` files) that guide Cursor's AI assistant to follow your team's coding standards automatically. These rules cover everything from package management to deployment strategies, ensuring consistency and quality across your codebase.
 
+<!-- OVERVIEW END -->
+
+<!-- WHAT'S INCLUDED START -->
 ## 🎯 What's Included
+
+<!-- CORE STANDARDS START -->
 
 ### Core Standards
 
@@ -16,14 +23,18 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 - **Git Standards** (`git.mdc`) - Conventional Commits and atomic change practices
 - **Cloudflare** (`cloudflare.mdc`) - Workers deployment, Edge runtime constraints, and R2 storage
 - **Drizzle ORM** (`drizzle.mdc`) - Schema definitions, migrations, and D1 best practices
+<!-- CORE STANDARDS START -->
 
+<!-- ADVANCED FEATURES START -->
 ### Advanced Features
 
 - **Rule Architect** (`rule-architect.mdc`) - Automatic detection and suggestion of new project-specific rules
 - **Global Rule Manager** (`global-rule-manager.mdc`) - Centralized rule management and synchronization from GitHub
 - **Planning Agent** (`plan.mdc`) - Structured planning workflows with sequential thinking and research tools
 - **PRD & Task Management** (`prd-file-structure-and-taskmanagement.mdc`) - Project requirements, design docs, and master task list management
+<!-- ADVANCED FEATURES END -->
 
+<!-- QUICK START START -->
 ## 🚀 Quick Start
 
 ### Setup in Your Project
@@ -53,6 +64,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 # Follow the prompts in your terminal
 ```
 
+<!-- REPOSITORY STRUCTURE START -->
 ## 📁 Repository Structure
 
 ```
@@ -61,6 +73,9 @@ cursor-rules/
 ├── LICENSE            # MIT License
 ├── .gitignore         # Git ignore patterns
 ├── .gitattributes     # Git attributes for line endings
+├── .github/
+│   └── workflows/
+│       └── sync-cursor-rules.yml  # GitHub Actions workflow
 └── .cursor/
     ├── rules/         # Rule definitions (.mdc files)
     │   ├── general.mdc
@@ -84,7 +99,9 @@ cursor-rules/
     │   └── planning-agent.mdc
     └── worktrees.json # Git worktree configuration
 ```
+<!-- REPOSITORY STRUCTURE END -->
 
+<!-- RULE FORMAT START -->
 ## 🛠️ Rule Format
 
 Rules are written in Markdown with frontmatter metadata:
@@ -103,7 +120,9 @@ alwaysApply: true           # Whether to apply globally
 *   **Requirement:** Description
 *   **Example:** Code example
 ```
+<!-- RULE FORMAT END -->
 
+<!-- KEY STANDARDS START -->
 ## 🎨 Key Standards Enforced
 
 ### Package Management
@@ -127,7 +146,9 @@ alwaysApply: true           # Whether to apply globally
 - ✅ Conventional Commits format
 - ✅ Atomic changes
 - ✅ Pre-commit linting checks
+<!-- KEY STANDARDS END -->
 
+<!-- CUSTOMIZATION START -->
 ## 🔧 Customization
 
 ### Creating Project-Specific Rules
@@ -155,7 +176,9 @@ alwaysApply: false
 *   **Requirement:** All Stripe calls must be wrapped in try/catch
 *   **Logging:** Use structured logging to Datadog
 ```
+<!-- CUSTOMIZATION END -->
 
+<!-- RULE CATERGORIES START -->
 ## 📚 Rule Categories
 
 | Rule | Scope | Always Applied |
@@ -170,7 +193,9 @@ alwaysApply: false
 | `global-rule-manager.mdc` | Rule synchronization and bootstrap | ✅ Yes |
 | `plan.mdc` | Planning workflows and task management | ❌ No |
 | `prd-file-structure-and-taskmanagement.mdc` | PRD, design docs, task lists | ❌ No |
+<!-- RULE CATERGORIES END -->
 
+<!-- CONTRIBUTING START -->
 ## 🤝 Contributing
 
 1. **Fork** this repository
@@ -179,6 +204,7 @@ alwaysApply: false
 4. **Test** rules in a sample project
 5. **Submit** a pull request with clear description
 
+<!-- RULE CONTRIBTUION GUIDELINES START -->
 ### Rule Contribution Guidelines
 
 - Use descriptive, kebab-case filenames
@@ -186,10 +212,18 @@ alwaysApply: false
 - Specify precise `globs` patterns
 - Document the "why" not just the "what"
 - Add TSDoc examples for complex patterns
+<!-- RULE CONTRIBTUION GUIDELINES END -->
+<!-- CONTRIBUTING END -->
+
+<!-- LICENSE START -->
 
 ## 📝 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
+
+<!-- LICENSE END -->
+
+<!-- RELATED RESOURCES START -->
 
 ## 🔗 Related Resources
 
@@ -197,6 +231,11 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - [Bun Documentation](https://bun.sh/docs)
 - [Next.js App Router](https://nextjs.org/docs/app)
 - [Biome Documentation](https://biomejs.dev)
+- [ultracite](https://ultracite.ai)
+
+<!-- RELATED RESOURCES END -->
+
+<!-- TIPS START -->
 
 ## 💡 Tips
 
@@ -205,8 +244,9 @@ MIT License - see [LICENSE](LICENSE) file for details.
 - **Test rules** in a small project before applying globally
 - Keep rules **focused** - one rule file per concern area
 
+<!-- TIPS END -->
 ---
 
-**Maintained by:** [Your Name]  
-**Last Updated:** 2025
+**Maintained by:** [My Name is Tito](https://github.com/mynameistito)  
+
 
