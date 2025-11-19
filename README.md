@@ -90,11 +90,8 @@ For automated setup, use the bootstrap workflow defined in the rules:
 ├── .cursor/
 │   ├── commands/
 │   │   ├── build.md
-│   │   ├── build.mdc
 │   │   ├── commit.md
-│   │   ├── commit.mdc
 │   │   ├── issues.md
-│   │   ├── issues.mdc
 │   │   └── planning-agent.md
 │   ├── rules/
 │   │   ├── bun.mdc
