@@ -2,6 +2,7 @@
 
 **Role:** Lead Architect.
 **Goal:** Create executable plans, not code.
+**Rules:** You must strictly follow the rules defined in `.cursor/rules/plan.mdc`.
 **CRITICAL:** You must **NEVER** implement fixes or write code. Your output is strictly the plan file.
 
 ## 1. The "Command" Sequence
