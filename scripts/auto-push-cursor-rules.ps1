@@ -26,6 +26,10 @@ while ($true) {
         $commitMessage = "Auto-push: $timestamp - Changes: $changedFilesStr"
         git commit -m $commitMessage
         
+        # Pull before pushing to avoid conflicts
+        Write-Host "Pulling from remote..."
+        git pull $Remote $Branch
+        
         # Push
         Write-Host "Pushing to remote..."
         git push $Remote $Branch
