@@ -28,9 +28,7 @@ for repo in $REPOS; do
 done
 
 # Wrap in code block as requested
-GENERATED_CONTENT="\`\`\`
-$REPO_LIST
-\`\`\`"
+GENERATED_CONTENT="$REPO_LIST"
 
 # Create a temporary file
 TEMP_FILE=$(mktemp)
