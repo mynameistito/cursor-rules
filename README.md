@@ -68,36 +68,37 @@ For automated setup, use the bootstrap workflow defined in the rules:
 ## 📁 Repository Structure
 
 ```
-cursor-rules/
-├── README.md          # This file - project documentation
-├── LICENSE            # MIT License
-├── .gitignore         # Git ignore patterns
-├── .gitattributes     # Git attributes for line endings
-├── .github/
-│   └── workflows/
-│       └── sync-cursor-rules.yml  # GitHub Actions workflow
-└── .cursor/
-    ├── rules/         # Rule definitions (.mdc files)
-    │   ├── general.mdc
-    │   ├── bun.mdc
-    │   ├── react-nextjs.mdc
-    │   ├── git.mdc
-    │   ├── cloudflare.mdc
-    │   ├── drizzle.mdc
-    │   ├── rule-architect.mdc
-    │   ├── global-rule-manager.mdc
-    │   ├── plan.mdc
-    │   └── prd-file-structure-and-taskmanagement.mdc
-    ├── commands/      # Custom Cursor commands
-    │   ├── build.md
-    │   ├── build.mdc
-    │   ├── commit.md
-    │   ├── commit.mdc
-    │   ├── issues.md
-    │   ├── issues.mdc
-    │   ├── planning-agent.md
-    │   └── planning-agent.mdc
-    └── worktrees.json # Git worktree configuration
+./
+├── .cursor/
+│   ├── commands/
+│   │   ├── build.md
+│   │   ├── build.mdc
+│   │   ├── commit.md
+│   │   ├── commit.mdc
+│   │   ├── issues.md
+│   │   ├── issues.mdc
+│   │   ├── planning-agent.md
+│   │   └── planning-agent.mdc
+│   ├── rules/
+│   │   ├── bun copy.mdc
+│   │   ├── bun.mdc
+│   │   ├── cloudflare.mdc
+│   │   ├── drizzle.mdc
+│   │   ├── general.mdc
+│   │   ├── git.mdc
+│   │   ├── global-rule-manager.mdc
+│   │   ├── plan.mdc
+│   │   ├── prd-file-structure-and-taskmanagement.mdc
+│   │   ├── react-nextjs.mdc
+│   │   └── rule-architect.mdc
+│   └── worktrees.json
+├── scripts/
+│   ├── auto-push-cursor-rules.ps1
+│   └── update-structure.sh*
+├── .gitattributes
+├── .gitignore
+├── LICENSE
+└── README.md
 ```
 <!-- REPOSITORY STRUCTURE END -->
 
