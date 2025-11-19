@@ -1,4 +1,7 @@
 # Cursor Rules
+
+![Sync Cursor Rules (Production)](https://github.com/mynameistito/cursor-rules/actions/workflows/sync-cursor-rules.yml/badge.svg)
+
 <!-- DESCRIPTION START -->
 A comprehensive collection of coding standards, workflow guidelines, and best practices for modern web development with Cursor IDE. This repository provides AI-powered rules that enforce consistent patterns across your projects.
 <!-- DESCRIPTION END -->
