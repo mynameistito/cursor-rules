@@ -208,12 +208,13 @@ jobs:
           git config user.name "mynameistito"
           git config user.email "github@mynameistito.com"
           
-          if [[ -n $(git status -s) ]]; then
+          # Check specifically for README changes, ignoring script permission changes
+          if [[ -n $(git status -s README.md) ]]; then
             git add README.md
             git commit -m "docs: update project structure [skip ci]"
             git push
           else
-            echo "✨ No changes to structure"
+            echo "✨ No changes to README structure"
           fi
 
       # 📝 Report Failure
