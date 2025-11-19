@@ -21,10 +21,8 @@ REPOS=$(grep -oP "          - '\K[^']+" "$WORKFLOW_FILE")
 # We'll build the string line by line
 REPO_LIST=""
 for repo in $REPOS; do
-    if [ -n "$REPO_LIST" ]; then
-        REPO_LIST="$REPO_LIST | "
-    fi
-    REPO_LIST="$REPO_LIST[$repo](https://github.com/$repo)"
+    REPO_LIST="$REPO_LIST
+- [$repo](https://github.com/$repo)"
 done
 
 # Wrap in code block as requested

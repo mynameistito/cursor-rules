@@ -13,7 +13,13 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 <!-- REPOS USING RULES START -->
 ## 📦 Repos Using These Rules
 
-[mynameistito/cursor-rules-test-1](https://github.com/mynameistito/cursor-rules-test-1) | [mynameistito/cursor-rules-test-2](https://github.com/mynameistito/cursor-rules-test-2) | [KillzoneGaming/kzg-servers-connect](https://github.com/KillzoneGaming/kzg-servers-connect) | [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller) | [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs) | [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
+
+- [mynameistito/cursor-rules-test-1](https://github.com/mynameistito/cursor-rules-test-1)
+- [mynameistito/cursor-rules-test-2](https://github.com/mynameistito/cursor-rules-test-2)
+- [KillzoneGaming/kzg-servers-connect](https://github.com/KillzoneGaming/kzg-servers-connect)
+- [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller)
+- [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs)
+- [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
 <!-- REPOS USING RULES END -->
 
 <!-- WHAT'S INCLUDED START -->
