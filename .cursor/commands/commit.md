@@ -26,8 +26,9 @@
 ## 4. Phase C: PR Creation (CodeRabbit Aware)
 **Condition:** If Phase A passed & `--no-pr` is missing.
 
-### Step 1: Prepare Body Content
-Check if `--cr URL` was provided to fetch a CodeRabbit/Review summary.
+### Step 1: Prepare Body Content (Smart Fetch)
+Check if `--cr URL` was provided. If so, fetch and clean the CodeRabbit review.
+
 ```bash
 BODY_FILE=$(mktemp)
 
@@ -37,12 +38,17 @@ if [[ "$ARGS" == *"--cr"* ]]; then
   CR_URL=$(echo "$ARGS" | grep -o 'https://[^ ]*')
   COMMENT_ID=$(echo "$CR_URL" | grep -oP 'issuecomment-\K\d+')
   
-  # 2. Fetch Comment Body via API
+  # 2. Fetch & Clean Body via API
   if [ -n "$COMMENT_ID" ]; then
     echo "⏳ Fetching CodeRabbit summary..."
-    gh api "repos/$REPO_ID/issues/comments/$COMMENT_ID" --jq .body > "$BODY_FILE"
-    # Append footer link
-    echo -e "\n\nGenerated from: $CR_URL" >> "$BODY_FILE"
+    # We fetch the body, then use sed to QUIT (q) when we hit the tips section
+    # This keeps the Walkthrough + Cohorts, but removes the footer noise
+    gh api "repos/$REPO_ID/issues/comments/$COMMENT_ID" --jq .body \
+      | sed '/<!-- tips_start -->/q' \
+      > "$BODY_FILE"
+      
+    # Append credit link
+    echo -e "\n\n> *Review generated from [CodeRabbit]($CR_URL)*" >> "$BODY_FILE"
   else
     echo "⚠️ Invalid CodeRabbit URL. Using default body."
     echo -e "Automated PR.\n- Biome: Passed ✅" > "$BODY_FILE"
@@ -67,11 +73,6 @@ fi
         --title "MSG" \
         --body-file "$BODY_FILE" \
         --draft)
-    else
-      # Optional: Update existing PR body if --cr provided? 
-      # Uncomment below to force update existing PRs with new CR content
-      # gh pr edit "$PR_URL" --body-file "$BODY_FILE"
-      :
     fi
     ```
 3.  **Cleanup:** `rm "$BODY_FILE"`
@@ -82,10 +83,9 @@ fi
 > ## 🚀 Smart Commit
 > *   **Repo:** [$REPO_ID](https://github.com/$REPO_ID)
 > *   **PR:** [#$PR_NUM]($PR_URL)
-> *   **Source:** ${CR_URL:+[CodeRabbit Review]($CR_URL)}
+> *   **Review:** ${CR_URL:+[Link]($CR_URL)}
 >
 > ### 📋 Merge Helper
-> *(Copy block below for Merge Commit or PR Comment)*
 > ```text
 > Fixes: $PR_URL
 > Review: $CR_URL
