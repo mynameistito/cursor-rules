@@ -23,6 +23,9 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 - [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller)
 - [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs)
 - [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
+- [KillzoneGaming/kzg-vip-confirmation-email-worker](https://github.com/KillzoneGaming/kzg-vip-confirmation-email-worker)
+- [KillzoneGaming/kzg-discord-servers-webhook](https://github.com/KillzoneGaming/kzg-discord-servers-webhook)
+- [KillzoneGaming/kzg-surf-maps-discord-bot](https://github.com/KillzoneGaming/kzg-surf-maps-discord-bot)
 <!-- REPOS USING RULES END -->
 
 <!-- WHAT'S INCLUDED START -->
