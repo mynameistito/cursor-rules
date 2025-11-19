@@ -24,6 +24,10 @@ jobs:
           
           #KillzoneGaming
           - 'KillzoneGaming/kzg-servers-connect'
+          - 'KillzoneGaming/kzg-workshop-map-puller'
+          - 'KillzoneGaming/kzg-website-nextjs'
+          - 'KillzoneGaming/kzg-discord-oidc-worker'
+          
 
     steps:
       - name: 📥 Checkout Source
