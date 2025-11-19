@@ -125,7 +125,7 @@ jobs:
   # JOB 2: THE REPORTER (Failures Only)
   # ------------------------------------------------------------------
   notify-discord:
-    needs: sync-configuration
+    needs: [sync-configuration, update-readme]
     if: always()
     runs-on: ubuntu-latest
     steps:
@@ -215,3 +215,17 @@ jobs:
           else
             echo "✨ No changes to structure"
           fi
+
+      # 📝 Report Failure
+      - name: Report Failure
+        if: failure()
+        run: |
+          echo "README Structure Update" > "failed_readme_update.txt"
+
+      - name: Upload Artifact
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-readme
+          path: failed_*.txt
+          retention-days: 1
