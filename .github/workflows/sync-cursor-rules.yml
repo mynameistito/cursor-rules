@@ -163,3 +163,38 @@ jobs:
           EOF
 
           curl -H "Content-Type: application/json" -X POST -d @discord_payload.json "$DISCORD_WEBHOOK"
+
+  # ------------------------------------------------------------------
+  # JOB 3: UPDATE README STRUCTURE
+  # ------------------------------------------------------------------
+  update-readme:
+    name: Update README Structure
+    needs: sync-configuration
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: 📥 Checkout Source
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT_SYNC }}
+
+      - name: 🌳 Install Tree
+        run: sudo apt-get install -y tree
+
+      - name: 🔄 Update Structure
+        run: |
+          chmod +x scripts/update-structure.sh
+          ./scripts/update-structure.sh
+
+      - name: 💾 Commit Changes
+        run: |
+          git config user.name "mynameistito"
+          git config user.email "github@mynameistito.com"
+          
+          if [[ -n $(git status -s) ]]; then
+            git add README.md
+            git commit -m "docs: update project structure [skip ci]"
+            git push
+          else
+            echo "✨ No changes to structure"
+          fi
