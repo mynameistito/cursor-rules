@@ -82,13 +82,6 @@ cursor-rules/
     │   ├── issues.mdc
     │   ├── planning-agent.md
     │   └── planning-agent.mdc
-    ├── plans/         # Project planning documents (gitignored)
-    │   └── [various .plan.md and .md files]
-    ├── temp/          # Temporary files (gitignored)
-    │   ├── landing-phase-4.txt
-    │   └── placeholders.txt
-    ├── todo/          # Todo items (gitignored)
-    │   └── zaraz-analytics.txt
     └── worktrees.json # Git worktree configuration
 ```
 
