@@ -10,6 +10,7 @@ on:
       - '.cursor/commands/**'
       - '.cursor/worktrees.json'
       - '.github/workflows/sync.yml'
+      - 'scripts/**'
   workflow_dispatch:
 
 jobs:
