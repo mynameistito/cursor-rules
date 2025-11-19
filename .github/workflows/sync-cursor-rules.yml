@@ -9,7 +9,7 @@ on:
       - '.cursor/rules/**'
       - '.cursor/commands/**'
       - '.cursor/worktrees.json'
-      - '.github/workflows/sync.yml'
+      - '.github/workflows/**'
       - 'scripts/**'
   workflow_dispatch:
 
