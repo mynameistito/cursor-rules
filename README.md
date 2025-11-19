@@ -85,6 +85,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── commit.mdc
 │   │   ├── issues.md
 │   │   ├── issues.mdc
+│   │   ├── planning-agent copy.md
 │   │   └── planning-agent.md
 │   ├── rules/
 │   │   ├── bun.mdc
@@ -100,6 +101,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   └── worktrees.json
 ├── scripts/
 │   ├── auto-push-cursor-rules.ps1
+│   ├── update-repos.sh
 │   └── update-structure.sh*
 ├── .gitattributes
 ├── .gitignore
