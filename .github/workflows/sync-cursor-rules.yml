@@ -84,7 +84,18 @@ jobs:
           
           STATUS=$(git status -s)
           if [[ -n "$STATUS" ]]; then
-            git commit -m "chore(cursor): sync shared rules from source [skip ci]"
+            # Generate formatted file list
+            CHANGES=$(echo "$STATUS" | awk '{
+                status=$1; 
+                file=$2; 
+                if (status=="A" || status=="??") symbol="+";
+                else if (status=="D") symbol="-";
+                else if (status=="M") symbol="~";
+                else symbol=status;
+                printf "%s %s, ", symbol, file;
+            }' | sed 's/, $//')
+            
+            git commit -m "chore(cursor): sync shared rules - Changes: $CHANGES [skip ci]"
             git pull --rebase origin $TARGET_BRANCH
             git push origin $TARGET_BRANCH
           else
