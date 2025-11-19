@@ -10,6 +10,9 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 
 <!-- OVERVIEW END -->
 
+<!-- REPOS USING RULES START -->
+<!-- REPOS USING RULES END -->
+
 <!-- WHAT'S INCLUDED START -->
 ## 🎯 What's Included
 

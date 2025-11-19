@@ -196,6 +196,8 @@ jobs:
         run: |
           chmod +x scripts/update-structure.sh
           ./scripts/update-structure.sh
+          chmod +x scripts/update-repos.sh
+          ./scripts/update-repos.sh
 
       - name: 💾 Commit Changes
         run: |
