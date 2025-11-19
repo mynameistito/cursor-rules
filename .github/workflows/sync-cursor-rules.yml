@@ -33,6 +33,9 @@ jobs:
           - 'KillzoneGaming/kzg-workshop-map-puller'
           - 'KillzoneGaming/kzg-website-nextjs'
           - 'KillzoneGaming/kzg-discord-oidc-worker'
+          - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
+          - 'KillzoneGaming/kzg-discord-servers-webhook'
+          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
 
     steps:
       - name: 📥 Checkout Source
