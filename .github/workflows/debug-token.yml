@@ -1,0 +1,48 @@
+name: Debug Token Access
+
+on: [workflow_dispatch]
+
+jobs:
+  debug-connection:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if Secret Exists
+        env:
+          MY_TOKEN: ${{ secrets.GH_PAT_SYNC }}
+        run: |
+          echo "Checking Secret..."
+          if [ -z "$MY_TOKEN" ]; then
+            echo "❌ CRITICAL ERROR: The secret 'GH_PAT_SYNC' is EMPTY or MISSING."
+            echo "Make sure you added it to the 'cursor-rules' repository settings, not the target repo."
+            exit 1
+          else
+            echo "✅ Secret detected (Length: ${#MY_TOKEN} characters)."
+          fi
+
+      - name: Test Access Manually (Curl)
+        env:
+          MY_TOKEN: ${{ secrets.GH_PAT_SYNC }}
+        run: |
+          echo "Attempting to view 'cursor-rules-test-1' via API..."
+          
+          # We use curl to ask GitHub: "Does this repo exist?" using your token
+          HTTP_CODE=$(curl -o /dev/null -s -w "%{http_code}\n" \
+            -H "Authorization: Bearer $MY_TOKEN" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/mynameistito/cursor-rules-test-1)
+          
+          echo "GitHub API Response Code: $HTTP_CODE"
+          
+          if [ "$HTTP_CODE" == "200" ]; then
+            echo "✅ SUCCESS: The token works! The repo is visible."
+          elif [ "$HTTP_CODE" == "404" ]; then
+            echo "❌ FAILURE (404): Repo not found." 
+            echo "Possibilities:"
+            echo "1. The token does not have 'Repo' scope."
+            echo "2. The repo name 'mynameistito/cursor-rules-test-1' is spelled wrong."
+            echo "3. You are using a Fine-grained token that wasn't given access to this specific repo."
+          elif [ "$HTTP_CODE" == "401" ]; then
+             echo "❌ FAILURE (401): Bad Credentials. The token string is invalid/expired."
+          else
+             echo "❌ FAILURE ($HTTP_CODE): Something else is wrong."
+          fi
