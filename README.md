@@ -80,7 +80,6 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── planning-agent.md
 │   │   └── planning-agent.mdc
 │   ├── rules/
-│   │   ├── bun copy.mdc
 │   │   ├── bun.mdc
 │   │   ├── cloudflare.mdc
 │   │   ├── drizzle.mdc
