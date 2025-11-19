@@ -77,8 +77,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── commit.mdc
 │   │   ├── issues.md
 │   │   ├── issues.mdc
-│   │   ├── planning-agent.md
-│   │   └── planning-agent.mdc
+│   │   └── planning-agent.md
 │   ├── rules/
 │   │   ├── bun.mdc
 │   │   ├── cloudflare.mdc
