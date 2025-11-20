@@ -1,0 +1,73 @@
+---
+description: Enforce HeroUI usage for all UI components, styling, and theming.
+globs: **/*.{ts,tsx,js,jsx}
+---
+
+# HeroUI Usage Rules
+
+## Core Principle
+- Use **HeroUI** (formerly NextUI) for ALL UI components, layout, and styling where possible.
+- Avoid using raw Radix UI primitives unless HeroUI does not provide a suitable component. HeroUI is already built on top of `react-aria` and `framer-motion`, so additional headless libraries are rarely needed.
+
+## Installation & Management
+- **CLI**: Use the HeroUI CLI to add new components.
+  ```bash
+  npx heroui-cli@latest add <component-name>
+  ```
+- Do not manually install component packages unless necessary.
+
+## Setup & Providers
+- Ensure the application is wrapped in `HeroUIProvider`.
+- For Next.js (App Router), this should be in a client component (e.g., `app/providers.tsx`) that wraps the `children` in the root layout.
+- Use `next-themes` for dark mode support, wrapping the `HeroUIProvider`.
+
+```tsx
+// app/providers.tsx
+"use client";
+
+import { HeroUIProvider } from "@heroui/system";
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+export function Providers({ children }: { children: React.ReactNode }) {
+  return (
+    <HeroUIProvider>
+      <NextThemesProvider attribute="class" defaultTheme="dark">
+        {children}
+      </NextThemesProvider>
+    </HeroUIProvider>
+  );
+}
+```
+
+## Styling & Theming
+- **Tailwind CSS**: HeroUI relies on Tailwind CSS. Ensure `tailwind.config.ts` (or `.js`) is configured with the `heroui()` plugin.
+- **Customization**: Customize themes (colors, layout, radii) inside the `heroui()` plugin configuration in `tailwind.config.ts`.
+  - Define custom color palettes (semantic colors like `primary`, `secondary`, `success`, etc.).
+  - Create custom variants using `tv` (Tailwind Variants) if needed for specific component overrides.
+
+## Components
+Always prioritize using these HeroUI components over standard HTML elements or other libraries:
+
+- **Layout**: `Navbar`, `Divider`, `Spacer`, `ScrollShadow`
+- **Forms**: `Input`, `Textarea`, `Select`, `Checkbox`, `RadioGroup`, `Switch`, `Slider`, `DateInput`, `DatePicker`, `DateRangePicker`, `TimeInput`, `NumberInput`, `InputOTP`, `Form`
+- **Navigation**: `Link`, `Breadcrumbs`, `Pagination`, `Tabs`, `Listbox`, `Dropdown`
+- **Feedback**: `Alert`, `Spinner`, `Progress`, `CircularProgress`, `Skeleton`, `Chip`, `Badge`, `Toast`, `Tooltip`, `Popover`
+- **Overlays**: `Modal`, `Drawer`
+- **Data Display**: `Table`, `Card`, `Accordion`, `User`, `Avatar`, `Image`, `Code`, `Snippet`, `Kbd`
+- **Interactive**: `Button`, `Ripple` (internal)
+
+## Best Practices
+- **Server vs Client**: HeroUI components are interactive and generally require `"use client"`. Keep server components as parents and pass data down to HeroUI client components.
+- **Accessibility**: HeroUI handles most a11y requirements. Ensure you provide `aria-label` or `aria-labelledby` for inputs and buttons without visible text.
+- **Icons**: Use a compatible icon library like `lucide-react` or `heroicons` passed as props to components (e.g., `startContent`, `endContent`).
+
+## Example: Adding a Button
+Do NOT use `<button className="...">`.
+Use:
+```tsx
+import { Button } from "@heroui/button";
+
+<Button color="primary" variant="shadow" onPress={handlePress}>
+  Action
+</Button>
+```
