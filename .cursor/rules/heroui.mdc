@@ -1,5 +1,5 @@
 ---
-description: Enforce HeroUI usage for all UI components, styling, and theming.
+description: Enforce HeroUI usage for all UI components, styling, and theming using Bun.
 globs: **/*.{ts,tsx,js,jsx}
 ---
 
@@ -7,13 +7,15 @@ globs: **/*.{ts,tsx,js,jsx}
 
 ## Core Principle
 - Use **HeroUI** (formerly NextUI) for ALL UI components, layout, and styling where possible.
-- Avoid using raw Radix UI primitives unless HeroUI does not provide a suitable component. HeroUI is already built on top of `react-aria` and `framer-motion`, so additional headless libraries are rarely needed.
+- Avoid using raw Radix UI primitives unless HeroUI does not provide a suitable component. HeroUI is already built on top of `react-aria` and `framer-motion`.
 
 ## Installation & Management
-- **CLI**: Use the HeroUI CLI to add new components.
+- **Package Manager**: Always use **Bun** for installation and script execution.
+- **CLI**: Use `bun` to interact with the HeroUI CLI.
   ```bash
-  npx heroui-cli@latest add <component-name>
+  bunx heroui-cli@latest add <component-name>
   ```
+- **Tip**: Ensure a `bun.lock` file exists in your project root (run `bun install` once). The CLI relies on this file to auto-detect Bun and skip the "Which package manager?" prompt.
 - Do not manually install component packages unless necessary.
 
 ## Setup & Providers
@@ -40,7 +42,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
 ```
 
 ## Styling & Theming
-- **Tailwind CSS**: HeroUI relies on Tailwind CSS. Ensure `tailwind.config.ts` (or `.js`) is configured with the `heroui()` plugin.
+- **Tailwind CSS**: HeroUI relies on Tailwind CSS. Ensure `tailwind.config.ts` is configured with the `heroui()` plugin.
 - **Customization**: Customize themes (colors, layout, radii) inside the `heroui()` plugin configuration in `tailwind.config.ts`.
   - Define custom color palettes (semantic colors like `primary`, `secondary`, `success`, etc.).
   - Create custom variants using `tv` (Tailwind Variants) if needed for specific component overrides.
