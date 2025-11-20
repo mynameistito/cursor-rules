@@ -78,6 +78,13 @@ jobs:
              cp -v source_repo/.cursor/worktrees.json target_repo/.cursor/worktrees.json
           fi
 
+          # Sync to .agent/rules
+          mkdir -p target_repo/.agent
+          rm -rf target_repo/.agent/rules
+          if [ -d "source_repo/.cursor/rules" ]; then
+            cp -rv source_repo/.cursor/rules target_repo/.agent/
+          fi
+
       - name: 💾 Review & Push
         working-directory: target_repo
         run: |
@@ -85,6 +92,7 @@ jobs:
           git config user.name "mynameistito"
           git config user.email "github@mynameistito.com"
           git add .cursor
+          git add .agent
           
           STATUS=$(git status -s)
           if [[ -n "$STATUS" ]]; then
