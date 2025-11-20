@@ -41,4 +41,4 @@ The final `.md` file should be concise and actionable:
 *   **Implementation Plan:** Numbered steps or checkboxes.
 *   **Verification:** How to test the result.
 
-**Constraint:** Do not output the raw `sequential-thinking` logs. Only output the clean plan.
+**Constraint:** Do not output the raw `sequential-thinking` logs. Do not paste the plan content into the chat window. **Your final chat response must only be:** "The plan is saved at .cursor/plans/{filename}".
