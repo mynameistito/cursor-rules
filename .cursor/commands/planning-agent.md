@@ -33,4 +33,4 @@ The final file must contain:
 *   **Implementation Plan:** Numbered steps or checkboxes.
 *   **Verification:** How to test the result.
 
-**Constraint:** Do not output raw logs. Do not output the plan content in the chat. After successfully creating the plan file, you must output **ONLY** the following confirmation message: "The plan is saved at .cursor/plans/{filename}".
+**Constraint:** Do not output raw logs. Do not output the plan content in the chat. After successfully creating the plan file, you must output **ONLY** the following confirmation message in a format like below: "The plan is saved at ```.cursor/plans/{filename}```". the `.cursor/plans/{filename}` should be in a full codeblock.
