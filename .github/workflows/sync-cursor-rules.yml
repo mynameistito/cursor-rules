@@ -24,10 +24,6 @@ jobs:
       fail-fast: false
       matrix:
         repo: 
-          # Personal
-          - 'mynameistito/cursor-rules-test-1'
-          - 'mynameistito/cursor-rules-test-2'
-          
           # KillzoneGaming
           - 'KillzoneGaming/kzg-servers-connect'
           - 'KillzoneGaming/kzg-workshop-map-puller'
@@ -35,6 +31,7 @@ jobs:
           - 'KillzoneGaming/kzg-discord-oidc-worker'
           - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
           - 'KillzoneGaming/kzg-discord-servers-webhook'
+          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
           - 'KillzoneGaming/kzg-surf-maps-discord-bot'
 
     steps:
