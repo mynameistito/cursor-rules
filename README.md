@@ -17,14 +17,13 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 ## 📦 Repos Using These Rules
 
 
-- [mynameistito/cursor-rules-test-1](https://github.com/mynameistito/cursor-rules-test-1)
-- [mynameistito/cursor-rules-test-2](https://github.com/mynameistito/cursor-rules-test-2)
 - [KillzoneGaming/kzg-servers-connect](https://github.com/KillzoneGaming/kzg-servers-connect)
 - [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller)
 - [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs)
 - [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
 - [KillzoneGaming/kzg-vip-confirmation-email-worker](https://github.com/KillzoneGaming/kzg-vip-confirmation-email-worker)
 - [KillzoneGaming/kzg-discord-servers-webhook](https://github.com/KillzoneGaming/kzg-discord-servers-webhook)
+- [KillzoneGaming/kzg-surf-maps-discord-bot](https://github.com/KillzoneGaming/kzg-surf-maps-discord-bot)
 - [KillzoneGaming/kzg-surf-maps-discord-bot](https://github.com/KillzoneGaming/kzg-surf-maps-discord-bot)
 <!-- REPOS USING RULES END -->
 
