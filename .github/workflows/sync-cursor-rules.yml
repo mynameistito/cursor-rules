@@ -32,7 +32,6 @@ jobs:
           - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
           - 'KillzoneGaming/kzg-discord-servers-webhook'
           - 'KillzoneGaming/kzg-surf-maps-discord-bot'
-          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
 
     steps:
       - name: 📥 Checkout Source
