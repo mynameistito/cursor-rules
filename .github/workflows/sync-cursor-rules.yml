@@ -33,7 +33,7 @@ jobs:
           - 'KillzoneGaming/kzg-discord-servers-webhook'
           - 'KillzoneGaming/kzg-surf-maps-discord-bot'
           - 'KillzoneGaming/kzg-discord-banner-changer'
-          - 'KillzoneGaming/kzg-rules/website-next'
+          - 'KillzoneGaming/kzg-rules-website-next'
           
     steps:
       - name: 📥 Checkout Source
