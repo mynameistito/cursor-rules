@@ -92,7 +92,8 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── build.md
 │   │   ├── commit.md
 │   │   ├── issues.md
-│   │   └── planning-agent.md
+│   │   ├── planning-agent.md
+│   │   └── security-review.md
 │   ├── rules/
 │   │   ├── bun.mdc
 │   │   ├── cloudflare.mdc
