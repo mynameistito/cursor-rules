@@ -25,15 +25,18 @@ jobs:
       matrix:
         repo: 
           # KillzoneGaming
-          - 'KillzoneGaming/kzg-servers-connect'
-          - 'KillzoneGaming/kzg-workshop-map-puller'
-          - 'KillzoneGaming/kzg-website-nextjs'
-          - 'KillzoneGaming/kzg-discord-oidc-worker'
-          - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
-          - 'KillzoneGaming/kzg-discord-servers-webhook'
-          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
+          # - 'KillzoneGaming/'
           - 'KillzoneGaming/kzg-discord-banner-changer'
+          - 'KillzoneGaming/kzg-discord-tracker-bot'
+          - 'KillzoneGaming/kzg-discord-worker'
           - 'KillzoneGaming/kzg-rules-website-next'
+          - 'KillzoneGaming/kzg-servers-connect'
+          - 'KillzoneGaming/kzg-staff-profile-picture-grabber'
+          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
+          - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
+          - 'KillzoneGaming/kzg-website-nextjs'
+          - 'KillzoneGaming/kzg-workshop-map-puller'
+          - 'KillzoneGaming/Twitter-URL-Fixer-Discord-Bot'
           
     steps:
       - name: 📥 Checkout Source
