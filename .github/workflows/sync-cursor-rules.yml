@@ -28,7 +28,7 @@ jobs:
           # - 'KillzoneGaming/'
           - 'KillzoneGaming/kzg-discord-banner-changer'
           - 'KillzoneGaming/kzg-discord-tracker-bot'
-          - 'KillzoneGaming/kzg-discord-worker'
+          - 'KillzoneGaming/kzg-discord-oidc-worker'
           - 'KillzoneGaming/kzg-rules-website-next'
           - 'KillzoneGaming/kzg-servers-connect'
           - 'KillzoneGaming/kzg-staff-profile-picture-grabber'
