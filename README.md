@@ -102,6 +102,7 @@ For automated setup, use the bootstrap workflow defined in the rules:
 │   │   ├── git.mdc
 │   │   ├── global-rule-manager.mdc
 │   │   ├── heroui.mdc
+│   │   ├── naming-convention.md
 │   │   ├── plan.mdc
 │   │   ├── prd-file-structure-and-taskmanagement.mdc
 │   │   ├── react-nextjs.mdc
