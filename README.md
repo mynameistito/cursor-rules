@@ -17,15 +17,17 @@ This repository contains structured rules (`.mdc` files) that guide Cursor's AI 
 ## 📦 Repos Using These Rules
 
 
-- [KillzoneGaming/kzg-servers-connect](https://github.com/KillzoneGaming/kzg-servers-connect)
-- [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller)
-- [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs)
-- [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
-- [KillzoneGaming/kzg-vip-confirmation-email-worker](https://github.com/KillzoneGaming/kzg-vip-confirmation-email-worker)
-- [KillzoneGaming/kzg-discord-servers-webhook](https://github.com/KillzoneGaming/kzg-discord-servers-webhook)
-- [KillzoneGaming/kzg-surf-maps-discord-bot](https://github.com/KillzoneGaming/kzg-surf-maps-discord-bot)
 - [KillzoneGaming/kzg-discord-banner-changer](https://github.com/KillzoneGaming/kzg-discord-banner-changer)
+- [KillzoneGaming/kzg-discord-tracker-bot](https://github.com/KillzoneGaming/kzg-discord-tracker-bot)
+- [KillzoneGaming/kzg-discord-oidc-worker](https://github.com/KillzoneGaming/kzg-discord-oidc-worker)
 - [KillzoneGaming/kzg-rules-website-next](https://github.com/KillzoneGaming/kzg-rules-website-next)
+- [KillzoneGaming/kzg-servers-connect](https://github.com/KillzoneGaming/kzg-servers-connect)
+- [KillzoneGaming/kzg-staff-profile-picture-grabber](https://github.com/KillzoneGaming/kzg-staff-profile-picture-grabber)
+- [KillzoneGaming/kzg-surf-maps-discord-bot](https://github.com/KillzoneGaming/kzg-surf-maps-discord-bot)
+- [KillzoneGaming/kzg-vip-confirmation-email-worker](https://github.com/KillzoneGaming/kzg-vip-confirmation-email-worker)
+- [KillzoneGaming/kzg-website-nextjs](https://github.com/KillzoneGaming/kzg-website-nextjs)
+- [KillzoneGaming/kzg-workshop-map-puller](https://github.com/KillzoneGaming/kzg-workshop-map-puller)
+- [KillzoneGaming/Twitter-URL-Fixer-Discord-Bot](https://github.com/KillzoneGaming/Twitter-URL-Fixer-Discord-Bot)
 <!-- REPOS USING RULES END -->
 
 <!-- WHAT'S INCLUDED START -->
