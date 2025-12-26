@@ -23,21 +23,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        repo: 
-          # KillzoneGaming
-          # - 'KillzoneGaming/'
-          - 'KillzoneGaming/kzg-discord-banner-changer'
-          - 'KillzoneGaming/kzg-discord-tracker-bot'
-          - 'KillzoneGaming/kzg-discord-oidc-worker'
-          - 'KillzoneGaming/kzg-rules-website-next'
-          - 'KillzoneGaming/kzg-servers-connect'
-          - 'KillzoneGaming/kzg-staff-profile-picture-grabber'
-          - 'KillzoneGaming/kzg-surf-maps-discord-bot'
-          - 'KillzoneGaming/kzg-vip-confirmation-email-worker'
-          - 'KillzoneGaming/kzg-website-nextjs'
-          - 'KillzoneGaming/kzg-workshop-map-puller'
-          - 'KillzoneGaming/Twitter-URL-Fixer-Discord-Bot'
-          
+        repo:
+          # mynameistito
+          # - 'mynameistito/'
+          - 'mynameistito/screenshotgun-app-v2'
+          # - 'mynameistito/justfuckingusecloudflare'
     steps:
       - name: 📥 Checkout Source
         uses: actions/checkout@v4
